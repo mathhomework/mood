@@ -10,4 +10,11 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'mood.views.home', name = 'home'),
+    url(r'^search/', 'mood.views.search', name = 'search'),
+    url(r'^search_results/', 'mood.views.search_results', name = 'search_results'),
+    url(r'^login/$', 'django.contrib.auth.views.login', name='login'),
+    url(r'^register/', 'mood.views.register', name ='register'),
+    url(r'^index/', 'mood.views.index', name ='index'),
+    url(r'^accounts/profile', 'mood.views.profile', name = 'profile'),
+
 )

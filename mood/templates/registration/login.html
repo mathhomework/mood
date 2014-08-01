@@ -1,0 +1,17 @@
+<html>
+<head>
+    <title>MovieStuff</title>
+</head>
+
+
+<form method="post" action=".">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" value="Log in">
+    </form>
+{#    <p>Password Reset <a href ="{% url 'password_reset' %}">Reset Password</a></p>#}
+    <p>Not member? <a href="{% url 'register' %}">Register!</a></p>
+
+
+</html>
