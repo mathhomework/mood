@@ -18,7 +18,7 @@ class Song(models.Model):
     title = models.CharField(max_length = 200)
     artist = models.CharField(max_length = 200)
     album = models.CharField(max_length = 200, null=True, blank = True)
-    mood = models.ManyToManyField(Mood, null=True, blank = True)
+    mood = models.ManyToManyField(Mood, null=True, blank = True, related_name="mood_song")
     listener = models.ManyToManyField(Listener, null= True, blank = True)
 
     def __unicode__(self):

@@ -11,10 +11,12 @@ import spotipy
 import sys
 # Create your views here.
 from mood.forms import EmailUserCreationForm
-from mood.models import Song, Movie, Listener
+from mood.models import Song, Movie, Listener, Mood
 from moodproject import settings
 import pygn
 
+g_client_id = "9971968-C149540B51CE26F597BF9EF18F12E36C"
+g_user_id = "260175070775627527-0EF9F1AC117E5B9DA2E8251432C5ABC7"
 
 def home(request):
     g_client_id = "9971968-C149540B51CE26F597BF9EF18F12E36C"
@@ -40,9 +42,9 @@ def home(request):
 
     # result = pygn.search(clientID= g_client_id, userID= g_user_id, artist='Kings Of Convenience', track='Homesick')
     # result = result["mood"]
-
-    # generate a radio via gracenote pgyn.
-    # result = pygn.createRadio(clientID=g_client_id, userID=g_user_id, mood='65322', popularity ='1000', similarity = '1000')
+    #
+    # # generate a radio via gracenote pgyn.
+    # # result = pygn.createRadio(clientID=g_client_id, userID=g_user_id, mood='65322', popularity ='1000', similarity = '1000')
     # print json.dumps(result, sort_keys=True, indent=4)
     # return render(request, "index.html", {'result': result})
 
@@ -75,6 +77,10 @@ def home(request):
     # return render(request, "index.html", {'result': response})
 
 
+    return render(request, "index.html")
+
+
+
 @login_required
 @csrf_exempt
 def search(request):
@@ -87,6 +93,7 @@ def index(request):
 @login_required
 @csrf_exempt
 def search_results(request):
+
     if request.method == "POST":
         data = json.loads(request.body)
         print "HELLO!"
@@ -112,7 +119,35 @@ def search_results(request):
             this_song.song_movie.add(current_movie)
             this_song.listener.add(request.user)
             # above line to link the many to many relationship
-            print this_song.song_movie
+            print "HELLOOOOOO"
+            print this_song.artist
+            result = pygn.search(clientID= g_client_id, userID= g_user_id,
+                                 artist=this_song.artist, track=this_song.title)
+
+            mood_dict = result["mood"]
+            mood_present = "1" in mood_dict.keys() #Checks if there is actually a mood forthe song
+            mood_2_present = "2" in mood_dict.keys()
+            if mood_present:
+                print mood_dict["1"]['TEXT'] #This is the Mood you want!!
+                new_mood = Mood.objects.create(feel= mood_dict["1"]['TEXT'])
+                new_mood.save()
+                new_mood.listener.add(request.user)
+                new_mood.mood_song.add(this_song)
+                if mood_2_present:
+                    new_2_mood = Mood.objects.create(feel= mood_dict["2"]['TEXT'])
+                    new_2_mood.save()
+                    new_2_mood.listener.add(request.user)
+                    new_2_mood.mood_song.add(this_song)
+            else:
+                print "No Moods"
+            # result2 = result["mood"]["1"]
+            # print result
+            # print result2
+            print "============================================================"
+            json.dumps(result, sort_keys=True, indent=4)
+            # json.dumps(result2, sort_keys=True, indent=4)
+            print "++++++++++++++++++++++++++++++++++++++++++++=="
+
 
         # artist = songs['items'][0]['artists'][0]['name']
 
