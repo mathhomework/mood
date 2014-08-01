@@ -92,8 +92,10 @@ def search(request):
 @login_required
 @csrf_exempt
 def search_results(request):
+    # So what happens if this isn't a POST request?
     if request.method == "POST":
         data = json.loads(request.body)
+        # print statements should not be left in once you've fixed whatever problem they were put in to help debug
         print "HELLO!"
         print data
         pprint.pprint(data)
