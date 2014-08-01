@@ -9,7 +9,7 @@ class Listener(AbstractUser):
 
 class Mood(models.Model):
     feel = models.CharField(max_length = 100, null = True, blank=True)
-    listener = models.ManyToManyField(Listener, null=True, blank=True)
+    listener = models.ManyToManyField(Listener, null=True, blank=True, related_name="listener_mood")
 
     def __unicode__(self):
         return u"{}".format(self.feel)
@@ -19,7 +19,7 @@ class Song(models.Model):
     artist = models.CharField(max_length = 200)
     album = models.CharField(max_length = 200, null=True, blank = True)
     mood = models.ManyToManyField(Mood, null=True, blank = True, related_name="mood_song")
-    listener = models.ManyToManyField(Listener, null= True, blank = True)
+    listener = models.ManyToManyField(Listener, null= True, blank = True, related_name="listener_song")
 
     def __unicode__(self):
         return u"{}".format(self.title)

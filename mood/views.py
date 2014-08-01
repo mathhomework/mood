@@ -19,8 +19,7 @@ g_client_id = "9971968-C149540B51CE26F597BF9EF18F12E36C"
 g_user_id = "260175070775627527-0EF9F1AC117E5B9DA2E8251432C5ABC7"
 
 def home(request):
-    g_client_id = "9971968-C149540B51CE26F597BF9EF18F12E36C"
-    g_user_id = "260175070775627527-0EF9F1AC117E5B9DA2E8251432C5ABC7"
+
     # # if len(sys.argv) > 1:
     # #     search_str = sys.argv[1]
     # # else:
@@ -87,13 +86,12 @@ def search(request):
     return render(request, "search.html")
 
 
-def index(request):
-    return render(request, "index.html")
+# def index(request):
+#     return render(request, "index.html")
 
 @login_required
 @csrf_exempt
 def search_results(request):
-
     if request.method == "POST":
         data = json.loads(request.body)
         print "HELLO!"
@@ -102,7 +100,7 @@ def search_results(request):
         query = "{} motion picture".format(data['album_query'])
         print query
         sp = spotipy.Spotify()
-        current_movie = Movie.objects.create(title=data['album_query'])
+        current_movie, created = Movie.objects.get_or_create(title=data['album_query'])
         current_movie.save()
         current_movie.listener.add(request.user)
         # current_movie.add(request.user)
@@ -112,7 +110,7 @@ def search_results(request):
         current_movie.save()
         songs = sp.album_tracks(movie_id)
         for song in songs['items']:
-            this_song = Song.objects.create(title=song['name'], artist=song['artists'][0]['name'])
+            this_song, created = Song.objects.get_or_create(title=song['name'], artist=song['artists'][0]['name'])
             this_song.save()
             print song['name']
             print song['artists'][0]['name']
@@ -129,15 +127,15 @@ def search_results(request):
             mood_2_present = "2" in mood_dict.keys()
             if mood_present:
                 print mood_dict["1"]['TEXT'] #This is the Mood you want!!
-                new_mood = Mood.objects.create(feel= mood_dict["1"]['TEXT'])
+                new_mood, created = Mood.objects.get_or_create(feel= mood_dict["1"]['TEXT'])
                 new_mood.save()
                 new_mood.listener.add(request.user)
                 new_mood.mood_song.add(this_song)
-                if mood_2_present:
-                    new_2_mood = Mood.objects.create(feel= mood_dict["2"]['TEXT'])
-                    new_2_mood.save()
-                    new_2_mood.listener.add(request.user)
-                    new_2_mood.mood_song.add(this_song)
+                # if mood_2_present:
+                #     new_2_mood = Mood.objects.create(feel= mood_dict["2"]['TEXT'])
+                #     new_2_mood.save()
+                #     new_2_mood.listener.add(request.user)
+                #     new_2_mood.mood_song.add(this_song)
             else:
                 print "No Moods"
             # result2 = result["mood"]["1"]
@@ -151,7 +149,7 @@ def search_results(request):
 
         # artist = songs['items'][0]['artists'][0]['name']
 
-        return HttpResponse(json.dumps({'hello': 'hello'}), content_type='application/json')
+        return HttpResponse(json.dumps({'msg': 'Movie Added!'}), content_type='application/json')
 
 def register(request):
     if request.method == 'POST':
@@ -176,5 +174,9 @@ def register(request):
 
 
 def profile(request):
-    return render(request, "index.html")
+    data = {'movies': request.user.listener_movie.all(),
+            'songs': request.user.listener_song.all(),
+            'moods': request.user.listener_mood.all()}
+
+    return render(request, "profile.html", data)
 

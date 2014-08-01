@@ -1,0 +1,28 @@
+{% extends "base_template.html" %}
+{% load staticfiles %}
+{% block content %}
+<head>
+    <script src="{% static "js/wordcloud2.js"  %}"></script>
+</head>
+<div class = "container" style="color:white;">
+    <div class ="row">
+        <div class ="col-xs-6">
+            <h1 style="padding-left:9px;">Moods</h1>
+            {% for mood in moods %}
+                <p class="myListItem"><span><strong>{{ mood }}</strong></span></p>
+            {% endfor %}
+        </div>
+        <div class ="col-xs-6">
+            <h1 style="padding-left:9px;">Movies</h1>
+            {% for movie in movies %}
+                <p class="myListItem"><span><strong>{{ movie }}</strong></span></p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+    <script>
+WordCloud(document.getElementById("my_canvas"), {list:[['foo',12], ['bar', 6]]});
+</script>
+<div id="my_canvas"></div>
+
+{% endblock %}

@@ -88,6 +88,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'mood.Listener'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'search'
 
 try:
     from local_settings import *

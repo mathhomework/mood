@@ -6,6 +6,7 @@ $(document).ready(function() {
     var movieInfo = {};
     var songInfo = {};
     $('#searchButton').on("click", function () {
+        console.log("it works");
         album_query = $('#search').val();
         var album_query_js = JSON.stringify({'album_query':album_query});
         $.ajax({
@@ -14,9 +15,13 @@ $(document).ready(function() {
             dataType: "json",
             data: album_query_js,
             success: function (data) {
+                $('#msg').append("<h1>"+data["msg"]+"</h1>");
+                $('#search').val("");
                 console.log(data);
             },
             error: function (data) {
+                $('#msg').append("<h1>Movie not recognized. Try again.</h1>");
+                $('#search').val("");
                 console.log(data);
             }
         });

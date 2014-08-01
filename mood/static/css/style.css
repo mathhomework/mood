@@ -1,9 +1,58 @@
-/*body{*/
-    /*background-image:url("http://businessfurniture.net/wp-content/uploads/2011/07/workplace1.jpg");*/
-    /*opacity: 0.4;*/
-    /*filter: alpha(opacity=40);*/
-/*}*/
+body{
+    background-image:url('http://stuckincustoms.smugmug.com/Burning-Man/i-9rBZsmh/0/XL/trey-ratcliff-burning-man-arch-XL.jpg');
+    background-size:cover;
+}
 
-/*.registration{*/
-    /*text-align:center;*/
+/*p{*/
+    /*color:#f9f2f4;*/
 /*}*/
+.registration{
+    text-align:center;
+}
+
+.topbar{
+    background-color:#f0ad4e;
+    color:ghostwhite;
+
+}
+
+.textBox{
+    border: 7px double #cccccc;
+    width: 300px;
+}
+
+.myListItem{
+  position: relative;
+  display: block;
+  padding: 7px 10px;
+  filter:alpha(opacity=42);
+  opacity:.42;
+  margin-bottom: -1px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.myListItem span{
+    color:black;
+    font-size:15px;
+    filter:alpha(opacity=100);
+    opacity:1;
+}
+
+.form-control{
+    display:inline;
+    width:35%;
+}
+
+.greeting{
+    color: #a6e1ec;
+    /*text-shadow:-5px -5px #f00,*/
+                /*5px -5px #f00,*/
+                /*-10px -10px #f60,*/
+                /*10px -10px #f60,*/
+                /*-15px -15px #ff0,*/
+                /*15px -15px #ff0,*/
+                /*-20px -20px #0f0,*/
+                /*20px -20px #0f0*/
+;
+}

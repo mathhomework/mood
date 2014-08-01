@@ -8,6 +8,22 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
+<div class = "container">
+    <div class = "navbar-header">
+        <h1 style="color:#f0ad4e">&#9729; Moodlyr</h1>
+    </div>
+    <div style="float:right;">
+        <h3 ><a href="{% url "search" %}">Search</a> |
+        {% if user.is_authenticated %}
+            <a href = "{% url 'profile' %}">Profile</a> |
+            <a href = "{% url 'user_logout' %}">Logout</a>
+        {% else %}
+            <a href = "{% url 'login' %}">Login</a>
+        {% endif %}
+        </h3>
+    </div>
+</div>
+
 {% block content %}{% endblock %}
 
 

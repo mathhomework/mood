@@ -1,12 +1,32 @@
+{% extends "base_template.html" %}
+{% load staticfiles %}
+
+
 <!DOCTYPE html>
 <html>
+{% block content %}
 <head lang="en">
+
     <meta charset="UTF-8">
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="/static/js/search.js"></script>
+    <script src="{% static "js/search.js" %}"></script>
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
     <title></title>
 </head>
+
 <body>
-    <p>Add a movie</p><input type = "text" id = "search"><button id="searchButton">Search!</button>
+    <div class = "row" style="text-align:center; ">
+        <br> <br> <br> <br> <br>
+        <div class="col-md-12" >
+            <h2 style=" font-size:75px;" class="greeting">Add a movie</h2>
+            <br>
+            <form role="form">
+                <input  type = "text" id = "search" class="form-control"><span>&nbsp; </span><button id="searchButton" class ="btn btn-lg">Add!</button>
+            </form>
+            <div id="msg"></div>
+        </div>
+
+    </div>
 </body>
+{% endblock %}
 </html>
