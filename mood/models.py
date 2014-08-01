@@ -19,6 +19,7 @@ class Song(models.Model):
     artist = models.CharField(max_length = 200)
     album = models.CharField(max_length = 200, null=True, blank = True)
     mood = models.ManyToManyField(Mood, null=True, blank = True, related_name="mood_song")
+    # Are listeners actually related to songs? Or are they only related to songs THROUGH movies?
     listener = models.ManyToManyField(Listener, null= True, blank = True, related_name="listener_song")
 
     def __unicode__(self):
